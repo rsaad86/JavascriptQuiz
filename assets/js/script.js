@@ -1,6 +1,8 @@
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
 var submitButton = document.getElementById("submit");
+
+//Javascript Questions
 var myQuestions = [
   {
     question: "Who invented JavaScript?",
@@ -21,34 +23,43 @@ var myQuestions = [
     correctAnswer: "c",
   },
   {
-    question: "Which tool can you use to ensure code quality?",
+    question: "How do you write 'Hello World' in an alert box?",
     answers: {
-      a: "Angular",
-      b: "jQuery",
-      c: "RequireJS",
-      d: "ESLint",
+      a: "msgBox('Hello World');",
+      b: "alertBox('Hello World');",
+      c: "msg('Hello World');",
+      d: "alert('Hello World');",
     },
     correctAnswer: "d",
   },
   {
-    question: "Who is poopadoop?",
+    question: "How do you create a function in JavaScript?",
     answers: {
-      a: "Pumpy",
-      b: "Boogy",
-      c: "Jubuu",
-      d: "Poora",
+      a: "function myFunction()",
+      b: "function = myFunction()",
+      c: "function:myFunction()",
+      d: "function myFunction[]",
     },
-    correctAnswer: "b",
+    correctAnswer: "a",
+  },
+  {
+    question: "How can you add a comment in a JavaScript?",
+    answers: {
+      a: "//This is a comment",
+      b: "'This is a comment",
+      c: ":This is a comment:",
+    },
+    correctAnswer: "a",
   },
 ];
 
 function buildQuiz() {
-  // variable to store the HTML output
+  // variable to store the HTML output in array
   var output = [];
 
   // for each question...
   myQuestions.forEach((currentQuestion, questionNumber) => {
-    // variable to store the list of possible answers
+    // variable to store the list of possible answers in array
     var answers = [];
 
     // and for each available answer...
@@ -70,27 +81,25 @@ function buildQuiz() {
     );
   });
 
-  // finally combine our output list into one string of HTML and put it on the page
+  // combine output list into one string of HTML and put it on the page
   quizContainer.innerHTML = output.join("");
 }
 
 function showResults() {
-  // gather answer containers from our quiz
+  // gather answer containers from quiz
   var answerContainers = quizContainer.querySelectorAll(".answers");
 
-  // keep track of user's answers
+  // track of user's answers
   let numCorrect = 0;
 
-  // for each question...
+  // find selected answer
   myQuestions.forEach((currentQuestion, questionNumber) => {
-    // find selected answer
     var answerContainer = answerContainers[questionNumber];
     var selector = `input[name=question${questionNumber}]:checked`;
     var userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
-    // if answer is correct
+    // if the answer is correct
     if (userAnswer === currentQuestion.correctAnswer) {
-      // add to the number of correct answers
       numCorrect++;
 
       // color the answers green
@@ -123,6 +132,13 @@ var downloadTimer = setInterval(function () {
 
 function refreshPage() {
   window.location.reload();
+}
+
+//highscore functionality
+function saveHighScore() {
+  //save highscore to local storage
+  var highScore = resultsContainer;
+  localStorage.setItem("highScore", []);
 }
 
 // display quiz right away
