@@ -1,6 +1,7 @@
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
 var submitButton = document.getElementById("submit");
+var highScore = document.getElementById("results");
 
 //Javascript Questions
 var myQuestions = [
@@ -57,14 +58,14 @@ function buildQuiz() {
   // variable to store the HTML output in array
   var output = [];
 
-  // for each question...
+  // for each question
   myQuestions.forEach((currentQuestion, questionNumber) => {
     // variable to store the list of possible answers in array
     var answers = [];
 
-    // and for each available answer...
+    // and for each available answer
     for (letter in currentQuestion.answers) {
-      // ...add an HTML radio button
+      // add an HTML radio button
       answers.push(
         `<label>
             <input type="radio" name="question${questionNumber}" value="${letter}">
@@ -107,7 +108,7 @@ function showResults() {
     }
     // if answer is wrong or blank
     else {
-      // color the answers red
+      // color the answers red and remove 5 seconds from the timer
       answerContainers[questionNumber].style.color = "red";
       timeleft = timeleft - 5;
     }
@@ -115,11 +116,17 @@ function showResults() {
 
   // show number of correct answers out of total
   resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+  localStorage.setItem("results", numCorrect);
 
   if (numCorrect === 0) {
     timeleft = 1;
     document.getElementById("submit").disabled = true;
-    document.getElementById("quiz").disabled = true;
+  }
+
+  if (numCorrect === 5) {
+    timeleft = 1;
+    document.getElementById("submit").disabled = true;
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}. A perfect score!`;
   }
 }
 
@@ -137,8 +144,10 @@ function refreshPage() {
 //highscore functionality
 function saveHighScore() {
   //save highscore to local storage
-  var highScore = resultsContainer;
-  localStorage.setItem("highScore", []);
+  highScore.addEventListener("click", prompt("Enter Username"));
+  document.getElementById("result").innerHTML = localStorage.getItem(
+    numCorrect
+  );
 }
 
 // display quiz right away

@@ -22,3 +22,10 @@ button:hover {
   background-color: purple;
   transition: 0.4s;
 }
+
+.start {
+  font-size: 45px;
+  text-align: center;
+  margin-left: 40%;
+  margin-top: 50px;
+}
