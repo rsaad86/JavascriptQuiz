@@ -1,0 +1,43 @@
+<html lang="en" style="background: rgb(255, 255, 255); font-size: 32px">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>JavascriptQuiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+
+  <body>
+    <h1>Javascript Quiz</h1>
+    <table>
+      <th>
+        <td><h1>Highest Score:</h1></td>
+        <td><h1 id="highestScoreLabel"></h1></td>
+      </th>
+    </table>
+
+    <div
+      id="quiz"
+      style="text-align: center; border: 3px solid rgb(26, 31, 107)"
+    ></div>
+
+    <button id="submit">Submit</button>
+    <button id="retryQuiz">Try again</button> 
+    <!--<button type="submit" onClick="saveHighScore()">Save Highscore</button> -->
+    <button type="restart" onClick="refreshPage()">Restart Quiz</button>
+    <div id="results"></div>
+    <div id="timer">
+      <p>
+        You have
+        <span id="countdown" style="color: rgb(70, 0, 70)">60 </span> Seconds
+        left
+      </p>
+    </div>
+
+    <script src="./assets/js/script.js">
+      localStorage.getItem("results");
+    </script>
+  </body>
+</html>
