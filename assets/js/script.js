@@ -1,56 +1,58 @@
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("results");
 var submitButton = document.getElementById("submit");
-var highScore = document.getElementById("results");
+var retryButton = document.getElementById("retryQuiz");
+// var highScore = document.getElementById("results");
+var highestScore = 0;
 
 //Javascript Questions
 var myQuestions = [
   {
-    question: "Who invented JavaScript?",
+    question: "1) Who invented JavaScript ?",
     answers: {
-      a: "Douglas Crockford",
-      b: "Sheryl Sandberg",
-      c: "Brendan Eich",
+      "a": "Douglas Crockford",
+      "b": "Sheryl Sandberg",
+      "c": "Brendan Eich"
     },
-    correctAnswer: "c",
+    correctAnswer: "c"
   },
   {
-    question: "Which one of these is a JavaScript package manager?",
+    question: "2) Which one of these is a JavaScript package manager ?",
     answers: {
-      a: "Node.js",
-      b: "TypeScript",
-      c: "npm",
+      "a": "Node.js",
+      "b": "TypeScript",
+      "c": "npm"
     },
-    correctAnswer: "c",
+    correctAnswer: "c"
   },
   {
-    question: "How do you write 'Hello World' in an alert box?",
+    question: "3) How do you write 'Hello World' in an alert box ?",
     answers: {
-      a: "msgBox('Hello World');",
-      b: "alertBox('Hello World');",
-      c: "msg('Hello World');",
-      d: "alert('Hello World');",
+      "a": "msgBox('Hello World');",
+      "b": "alertBox('Hello World');",
+      "c": "msg('Hello World');",
+      "d": "alert('Hello World');"
     },
-    correctAnswer: "d",
+    correctAnswer: "d"
   },
   {
-    question: "How do you create a function in JavaScript?",
+    question: "4) How do you create a function in JavaScript ?",
     answers: {
-      a: "function myFunction()",
-      b: "function = myFunction()",
-      c: "function:myFunction()",
-      d: "function myFunction[]",
+      "a": "function myFunction()",
+      "b": "function = myFunction()",
+      "c": "function:myFunction()",
+      "d": "function myFunction[]"
     },
-    correctAnswer: "a",
+    correctAnswer: "a"
   },
   {
-    question: "How can you add a comment in a JavaScript?",
+    question: "5) How can you add a comment in a JavaScript ?",
     answers: {
-      a: "//This is a comment",
-      b: "'This is a comment",
-      c: ":This is a comment:",
+      "a": "//This is a comment",
+      "b": "'This is a comment",
+      "c": ":This is a comment:"
     },
-    correctAnswer: "a",
+    correctAnswer: "a"
   },
 ];
 
@@ -69,7 +71,6 @@ function buildQuiz() {
       answers.push(
         `<label>
             <input type="radio" name="question${questionNumber}" value="${letter}">
-            ${letter} :
             ${currentQuestion.answers[letter]}
           </label>`
       );
@@ -78,12 +79,14 @@ function buildQuiz() {
     // add this question and its answers to the output
     output.push(
       `<div class="question"> ${currentQuestion.question} </div>
-        <div class="answers"> ${answers.join("")} </div>`
+        <div class="answers"> ${answers.join("")} </div>
+        <br\>`
     );
   });
 
   // combine output list into one string of HTML and put it on the page
   quizContainer.innerHTML = output.join("");
+  submitButton.disabled = false;
 }
 
 function showResults() {
@@ -97,61 +100,61 @@ function showResults() {
   myQuestions.forEach((currentQuestion, questionNumber) => {
     var answerContainer = answerContainers[questionNumber];
     var selector = `input[name=question${questionNumber}]:checked`;
-    var userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
+    var userAnswer = (answerContainer.querySelector(selector) || {}).value; 
+    // console.log(userAnswer);
     // if the answer is correct
     if (userAnswer === currentQuestion.correctAnswer) {
       numCorrect++;
-
       // color the answers green
-      answerContainers[questionNumber].style.color = "lightgreen";
+      answerContainers[questionNumber].style.color = "green";
     }
     // if answer is wrong or blank
     else {
       // color the answers red and remove 5 seconds from the timer
       answerContainers[questionNumber].style.color = "red";
-      timeleft = timeleft - 5;
     }
   });
 
   // show number of correct answers out of total
   resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-  localStorage.setItem("results", numCorrect);
-
-  if (numCorrect === 0) {
-    timeleft = 1;
-    document.getElementById("submit").disabled = true;
+  if (numCorrect > highestScore) {
+    highestScore = numCorrect;
   }
+  highestScoreLabel.innerHTML = `${highestScore}`;
+  localStorage.setItem("results", numCorrect);
 
   if (numCorrect === 5) {
     timeleft = 1;
     document.getElementById("submit").disabled = true;
     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}. A perfect score!`;
   }
+  submitButton.disabled = true;
 }
+
+
 
 var timeleft = 60;
 var downloadTimer = setInterval(function () {
   timeleft--;
   document.getElementById("countdown").textContent = timeleft;
-  if (timeleft <= 0) clearInterval(downloadTimer);
+  if (timeleft <= 0) {
+    clearInterval(downloadTimer);
+    submitButton.disabled = true;
+    retryButton.disabled = true;
+  }
+  
 }, 1000);
 
 function refreshPage() {
   window.location.reload();
 }
 
-//highscore functionality
-function saveHighScore() {
-  //save highscore to local storage
-  highScore.addEventListener("click", prompt("Enter Username"));
-  document.getElementById("result").innerHTML = localStorage.getItem(
-    numCorrect
-  );
-}
 
 // display quiz right away
 buildQuiz();
 
 // on submit, show results
 submitButton.addEventListener("click", showResults);
+retryButton.addEventListener("click", buildQuiz);
+
+

@@ -1,6 +1,16 @@
 h1 {
-  color: rgb(153, 153, 228);
+  color: rgb(2, 2, 148);
   text-align: center;
+}
+
+h2 {
+  color: rgb(2, 2, 148);
+  text-align: center;
+}
+
+h3 {
+  color: rgb(0, 0, 0);
+  text-align: left;
 }
 
 .quiz {
@@ -14,12 +24,12 @@ button {
   float: inline-start;
   text-align: center;
   font-size: 20px;
-  border: 1px solid purple;
+  border: 1px solid rgb(5, 15, 0);
   border-radius: 5px;
 }
 
 button:hover {
-  background-color: purple;
+  background-color: rgb(184, 3, 3);
   transition: 0.4s;
 }
 
@@ -29,3 +39,16 @@ button:hover {
   margin-left: 40%;
   margin-top: 50px;
 }
+
+.question {
+  color: rgb(0, 0, 0);
+  text-align: left;
+  font-weight: bold;
+}
+
+.answers {
+  color: rgb(0, 0, 0);
+  text-align: left;
+  text-indent: 50px;
+}
+

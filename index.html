@@ -1,4 +1,4 @@
-<html lang="en" style="background: rgb(24, 78, 142); font-size: 32px">
+<html lang="en" style="background: rgb(255, 255, 255); font-size: 32px">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -10,20 +10,22 @@
   </head>
 
   <body>
-    <h1 class="header">Javascript Quiz</h1>
-    <div id="highscore" style="font-size: 16px">
-      <a href="./highscores.html" target="blank" style="width: 20%"
-        ><h2 style="color: rgb(0, 0, 0)">View Highscore</h2></a
-      >
-    </div>
+    <h1>Javascript Quiz</h1>
+    <table>
+      <th>
+        <td><h1>Highest Score:</h1></td>
+        <td><h1 id="highestScoreLabel"></h1></td>
+      </th>
+    </table>
 
     <div
       id="quiz"
       style="text-align: center; border: 3px solid rgb(26, 31, 107)"
     ></div>
-    <button id="nextQuestion">Next Question</button>
+
     <button id="submit">Submit</button>
-    <button type="submit" onClick="saveHighScore()">Save Highscore</button>
+    <button id="retryQuiz">Try again</button> 
+    <!--<button type="submit" onClick="saveHighScore()">Save Highscore</button> -->
     <button type="restart" onClick="refreshPage()">Restart Quiz</button>
     <div id="results"></div>
     <div id="timer">
